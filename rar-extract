@@ -1,0 +1,41 @@
+#!/bin/bash
+
+## First, unpack all the rar files
+
+echo "### Starting script"
+echo "------------------------"
+echo " "
+echo "### Unpacking all .rar-files"
+echo "------------------------"
+
+find /storage/Emby -name '*.rar' -execdir unrar x {} \;
+
+
+## Unpacked what needs to be unpacked.
+## Clean up after leftover files.
+
+echo "### All rar-files unpacked. Finding any files to delete"
+echo "### Please stand by, this might take a while depeding on"
+echo "### your storage"
+echo "------------------------"
+
+## Delete all .rar-files first
+
+find /storage/Emby -name "*.rar" -type f -delete
+
+## And now we loop through *.r00 to *.r200 to delete all
+## leftover files
+
+for i in {00..09};
+do
+        find /storage/Emby -name "*.r$i" -type f -delete
+done
+
+for i in {10..200};
+do
+        find /storage/Emby -name "*.r$i" -type f -delete
+done
+
+echo "### Script done executing."
+
+exit 0
